@@ -1,36 +1,43 @@
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.FileWriter;
 import java.io.File;
 import java.util.Scanner;
 
-public class FileDemo {
 
-    public static void main(String[] args) {
+class ShoppingList {
 
-        // Запись в файл
-        try {
-            FileWriter writer = new FileWriter("my_notes.txt");
-            writer.write("Привет\n");
-            writer.write("Привет привет\n");
-            writer.write("Привет привет привет\n");
+    ShoppingList(){}
+
+    void saveNote(){
+
+        try{
+            FileWriter writer = new FileWriter("shopping.txt");
+            writer.write("milk\n");
+            writer.write("cheese\n");
             writer.close();
         } catch (IOException e) {
-            System.out.println("Ошибка записи: " + e.getMessage());
+            System.out.println("Ошибка при сохранении и или создании текстового файла: " + e.getMessage());
         }
 
-        // Чтение из файла
-        try {
-            File file = new File("my_notes.txt");
-            Scanner scanner = new Scanner(file);
+    } void readNote(){
+
+        try{
+            File reader = new File("shopping.txt");
+            Scanner scanner = new Scanner(reader);
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 System.out.println(line);
             }
-
-            scanner.close();
         } catch (IOException e) {
-            System.out.println("Ошибка чтения: " + e.getMessage());
+            System.out.println("Ошибка при чтении файла: " + e.getMessage());
         }
+    }
+
+    static public void main(String[] args) {
+
+        ShoppingList sh = new ShoppingList();
+        sh.saveNote();
+        sh.readNote();
     }
 }
