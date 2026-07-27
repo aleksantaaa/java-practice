@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 class Task {
 
@@ -34,9 +38,49 @@ class TaskManager {
         }
         System.out.println();
     }
+
+    void markAsDone( int index ) {
+        tasks.get(index).done = true;
+    }
+
+    void saveToFile(String filename) {
+
+        try {
+
+            FileWriter writer = new FileWriter(filename);
+            for ( int i = 0; i < tasks.size(); i++) {
+                writer.write(tasks.get(i).name + "\n");
+            }
+            writer.close();
+
+        }
+
+        catch (IOException e) {
+            System.out.println("There is a fault occured while reading the file");
+        }
+    }
+
+    void loadFromFile(String filename) {
+
+        try {
+            File file = new File(filename);
+            Scanner reader = new Scanner (file);
+
+            while ( reader.hasNextLine()) {
+
+                String taskName = reader.nextLine();
+                Task newTask = new Task(taskName);
+                tasks.add(newTask);
+            }
+        } catch (IOException e) {
+
+            System.out.println("There is a failure with loading tasks");
+        }
+    }
 }
 
-public class TaskTracker {
+
+public class TaskTracker  {
 
     public static void main(String[] args) {
 
@@ -46,5 +90,11 @@ public class TaskTracker {
         tm.addTask("Paint");
 
         tm.showTasks();
+
+        tm.saveToFile("tasks.txt");
+        tm.loadFromFile("tasks.txt");
+
+        tm.showTasks();
+
     }
 }
