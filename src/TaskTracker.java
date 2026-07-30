@@ -77,6 +77,36 @@ class TaskManager {
             System.out.println("There is a failure with loading tasks");
         }
     }
+
+
+    void Menu () {
+
+        Scanner number = new Scanner (System.in);
+        System.out.println("Введите цифру: ");
+
+        while (true) {
+
+            int choice = number.nextInt();
+            number.nextLine();  // "съедаем" остаток строки после числа
+            if ( choice == 1) {
+
+                System.out.println ("Добавить задачу");
+                String task = number.nextLine();
+                addTask(task);
+
+            } else if (choice == 2) {
+
+                System.out.println ("Показать задачи");
+                showTasks();
+
+            } else if ( choice == 3) {
+
+                break;
+
+            }
+        }
+
+    }
 }
 
 
@@ -85,16 +115,13 @@ public class TaskTracker  {
     public static void main(String[] args) {
 
         TaskManager tm = new TaskManager();
-        tm.addTask("Clean");
-        tm.addTask("Drive");
-        tm.addTask("Paint");
+
+        tm.Menu();
 
         tm.showTasks();
 
-        tm.saveToFile("tasks.txt");
-        tm.loadFromFile("tasks.txt");
 
-        tm.showTasks();
+
 
     }
 }
