@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
 
 class Song {
 
@@ -32,6 +36,56 @@ class Playlist {
             System.out.println( songs.get(i).title + " - " + songs.get(i).artist );
         }
     }
+
+    void saveToFile (String filename) {
+
+        try {
+
+            FileWriter writer = new FileWriter(filename);
+
+            for (int i = 0; i < songs.size(); i++) {
+
+                writer.write ( songs.get(i).title + ";" + songs.get(i).artist + "\n" );
+            }
+
+            writer. close();
+
+        } catch (IOException e) {
+
+            System.out.println( "There is a failure while saving the file: " + e.getMessage());
+
+        }
+    }
+
+
+    void loadFromFile (String filename) {
+
+        try {
+
+            File file = new File(filename);
+            Scanner sc = new Scanner(file);
+
+            while (sc.hasNextLine()) {
+
+                String line = sc.nextLine();
+
+                String[] parts = line.split(";");
+
+                Song newSong = new Song(parts [0], parts [1]);
+                songs.add(newSong);
+
+            }
+        } catch (IOException e) {
+
+            System.out.println ( "There is an issue which appeared while loading the file: " + e.getMessage());
+
+        }
+    }
+
+
+
+
+
 }
 
 public class Songs {
